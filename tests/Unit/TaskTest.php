@@ -18,7 +18,7 @@ class TaskTest extends TestCase
     {
         $this->assertCount(0, Task::get());
 
-        $response = (new Create('Title', 'Description'))->handle();
+        $response = Create::dispatchNow('Title', 'Description');
 
         $this->assertInstanceOf(Task::class, $response);
 
@@ -33,11 +33,11 @@ class TaskTest extends TestCase
     {
         $task = factory(Task::class)->create();
 
-        $response = (new Update($task, [
+        $response = Update::dispatchNow($task, [
             'title' => 'Title',
             'description' => 'Description',
             'status' => true,
-        ]))->handle();
+        ]);
 
         $this->assertInstanceOf(Task::class, $response);
 
@@ -53,7 +53,7 @@ class TaskTest extends TestCase
     {
         $task = factory(Task::class)->create();
 
-        (new Delete($task))->handle();
+        Delete::dispatchNow($task);
 
         $this->assertFalse(Task::exists($task->id));
     }
