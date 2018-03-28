@@ -23,6 +23,21 @@ class TaskControllerTest extends TestCase
     }
 
     /** @test */
+    public function can_list_a_task(): void
+    {
+        $task = factory(Task::class)->create();
+
+        $response = $this->json('GET', route('task.show', 1337));
+        $response->assertStatus(404);
+
+        $response = $this->json('GET', route('task.show', $task));
+        $response->assertStatus(200)
+            ->assertJsonStructure([
+                'id', 'title', 'description', 'status', 'created_at', 'updated_at',
+            ]);
+    }
+
+    /** @test */
     public function can_create_a_task(): void
     {
         $this->assertCount(0, Task::get());

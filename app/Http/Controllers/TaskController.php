@@ -21,6 +21,14 @@ class TaskController extends Controller
     }
 
     /**
+     * Return a task.
+     */
+    public function show(Task $task): Task
+    {
+        return $task;
+    }
+
+    /**
      * Store a new task.
      */
     public function store(Request $request): JsonResponse
