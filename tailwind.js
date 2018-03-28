@@ -51,7 +51,7 @@ let colors = {
   "grey-dark": "#8795a1",
   grey: "#b8c2cc",
   "grey-light": "#dae1e7",
-  "grey-lighter": "#f1f5f8",
+  "grey-lighter": "#f2f2f2",
   "grey-lightest": "#f8fafc",
   white: "#ffffff",
 
@@ -105,11 +105,11 @@ let colors = {
 
   "indigo-darkest": "#191e38",
   "indigo-darker": "#2f365f",
-  "indigo-dark": "#5661b3",
+  "indigo-dark": "#5262eb",
   indigo: "#6574cd",
   "indigo-light": "#7886d7",
   "indigo-lighter": "#b2b7ff",
-  "indigo-lightest": "#e6e8ff",
+  "indigo-lightest": "#eeeef6",
 
   "purple-darkest": "#21183c",
   "purple-darker": "#382b5f",

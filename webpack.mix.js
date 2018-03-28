@@ -11,6 +11,7 @@ require('laravel-mix-purgecss');
 mix.webpackConfig({
   resolve: {
     alias: {
+      'core': paths.js + '/core',
       '@': paths.js + '/components',
     },
   },
