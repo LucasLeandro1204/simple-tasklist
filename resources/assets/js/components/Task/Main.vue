@@ -2,8 +2,8 @@
   <task-section class="relative" title="Your Tasks">
     <card :task="task" :key="task.id" v-for="task in tasks" />
 
-    <div class="buttons w-full">
-      <button class="mx-auto flex align-center bg-indigo-light rounded-full text-white justify-center w-12 h-12">
+    <div class="buttons pin-l pin-b fixed w-full">
+      <button class="mx-auto mb-6 flex align-center bg-indigo-light rounded-full text-white justify-center w-12 h-12">
         <i class="fa fa-plus"></i>
       </button>
     </div>
@@ -74,10 +74,3 @@
     },
   };
 </script>
-
-<style scoped>
-  .buttons {
-    bottom: 15px;
-    position: fixed;
-  }
-</style>
