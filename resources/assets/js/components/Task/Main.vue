@@ -1,8 +1,6 @@
 <template>
   <task-section title="Your Tasks">
-    <div>
-      <card :task="task" :key="task.id" v-for="task in tasks" />
-    </div>
+    <card :task="task" :key="task.id" v-for="task in tasks" />
   </task-section>
 </template>
 
