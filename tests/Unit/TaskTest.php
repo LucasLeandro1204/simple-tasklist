@@ -5,8 +5,8 @@ namespace Tests\Unit;
 use App\Task;
 use Tests\TestCase;
 use App\Jobs\CreateTask as Create;
-use App\Jobs\UpdateTask as Update;
 use App\Jobs\DeleteTask as Delete;
+use App\Jobs\UpdateTask as Update;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class TaskTest extends TestCase
@@ -23,6 +23,8 @@ class TaskTest extends TestCase
         $this->assertInstanceOf(Task::class, $response);
 
         $this->assertNotNull($task = Task::first());
+
+        $this->assertEquals($task->id, $response->id);
         $this->assertEquals('Title', $task->title);
         $this->assertEquals('Description', $task->description);
         $this->assertFalse($task->status);
@@ -40,6 +42,7 @@ class TaskTest extends TestCase
         ]);
 
         $this->assertInstanceOf(Task::class, $response);
+        $this->assertEquals($task->id, $response->id);
 
         $task = $task->fresh();
 
