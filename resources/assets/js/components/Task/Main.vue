@@ -25,15 +25,17 @@
     created () {
       this.fetch();
 
-      Bus.wait('toggleStatus', (id) => {
-        const task = this.tasks.find(task => task.id == id);
+      Bus.wait('toggleStatus', (id, wait) => {
+        wait(id, () => {
+          const task = this.tasks.find(task => task.id == id);
 
-        task.status = ! task.status;
+          task.status = ! task.status;
 
-        return this.update(task.id, { status: task.status })
-          .catch((err) => {
-            task.status = ! task.status;
-          });
+          return this.update(task.id, { status: task.status })
+            .catch((err) => {
+              task.status = ! task.status;
+            });
+        });
       });
     },
 
@@ -42,7 +44,7 @@
 
         return Service.update(id, attributes)
           .then(({ data }) => {
-            const index = this.tasks.findIndex(task => task.id == id);
+            const index = this.tasks.find(task => task.id == id);
 
             this.$set(this.tasks, index, data);
           });
@@ -51,7 +53,6 @@
       fetch () {
         Service.all()
           .then(({ data }) => {
-            console.log(data);
             if (! data.length) {
               throw new Error('Empty');
             }

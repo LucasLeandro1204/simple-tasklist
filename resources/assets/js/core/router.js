@@ -3,13 +3,22 @@ import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
 
-import Task from '@/Task/Main.vue';
+import Main from '@/Task/Main.vue';
+import Show from '@/Task/Show.vue';
 
 export default new VueRouter({
+  mode: 'history',
   routes: [
     {
       path: '/',
-      component: Task,
+      component: Main,
+      name: 'task.index',
     },
+    {
+      props: true,
+      path: '/:id',
+      component: Show,
+      name: 'task.show',
+    }
   ],
 });
