@@ -7,8 +7,9 @@
 </template>
 
 <script>
-  import Axios from 'axios';
+  import Bus from 'core/bus';
   import Card from '@/Task/Card.vue';
+  import Service from 'services/task';
   import TaskSection from '@/Section.vue';
 
   export default {
@@ -24,19 +25,47 @@
     },
 
     created () {
-      Axios.get('/api/task')
-        .then(({ data }) => {
-          if (! data.length) {
-            throw new Error('Empty');
-          }
+      this.fetch();
 
-          this.tasks = data;
-        })
-        .catch(({ message }) => {
-          if (message === 'Empty') {
-            this.tasks = [];
-          }
-        });
+      Bus.wait('toggleStatus', (id) => {
+        const task = this.tasks.find(task => task.id == id);
+
+        task.status = ! task.status;
+
+        return this.update(task.id, { status: task.status })
+          .catch((err) => {
+            task.status = ! task.status;
+          });
+      });
+    },
+
+    methods: {
+      update (id, attributes) {
+
+        return Service.update(id, attributes)
+          .then(({ data }) => {
+            const index = this.tasks.findIndex(task => task.id == id);
+
+            this.$set(this.tasks, index, data);
+          });
+      },
+
+      fetch () {
+        Service.all()
+          .then(({ data }) => {
+            console.log(data);
+            if (! data.length) {
+              throw new Error('Empty');
+            }
+
+            this.tasks = data;
+          })
+          .catch(({ message }) => {
+            if (message === 'Empty') {
+              this.tasks = [];
+            }
+          });
+      }
     },
   };
 </script>

@@ -1,6 +1,6 @@
 <template>
   <section>
-    <h5 class="text-indigo-dark" v-text="title"></h5>
+    <h5 class="text-indigo-dark mb-4" v-text="title"></h5>
 
     <slot></slot>
   </section>

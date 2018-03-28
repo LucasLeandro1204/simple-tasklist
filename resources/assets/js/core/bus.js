@@ -4,6 +4,7 @@ class Bus {
   constructor (vue) {
     this.vue = vue;
     this.map = new Map();
+    this.queue = new Map();
   }
 
   on (event, callback) {
@@ -12,6 +13,19 @@ class Bus {
     if (this.map.has(event)) {
       callback(this.map.get(event));
     }
+  }
+
+  wait (event, promise, identifier) {
+    this.on(event, (...args) => {
+      if (this.queue.get(event + '-' + identifier)) {
+        return;
+      }
+
+      this.queue.set(event + '-' + identifier, true);
+
+      promise(...args)
+        .then(() => this.queue.set(event + '-' + identifier, false));
+    });
   }
 
   emit (event, data = null, cache = false) {

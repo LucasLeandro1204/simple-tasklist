@@ -13,6 +13,10 @@ class Task {
   all () {
     return this.request.get();
   }
+
+  update (id, data) {
+    return this.request.put('/' + id, data);
+  }
 };
 
 export default new Task(Axios);

@@ -10,6 +10,7 @@
   <title>TaskList</title>
 
   <link href="{{ mix('css/main.css') }}" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 </head>
 <body>
   <div id="app"></div>
