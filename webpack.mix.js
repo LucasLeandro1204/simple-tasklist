@@ -13,6 +13,7 @@ mix.webpackConfig({
     alias: {
       'core': paths.js + '/core',
       '@': paths.js + '/components',
+      'services': paths.js + '/services',
     },
   },
 });
