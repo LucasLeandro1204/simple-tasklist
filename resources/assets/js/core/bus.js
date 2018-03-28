@@ -15,15 +15,23 @@ class Bus {
     }
   }
 
-  wait (event, promise, identifier) {
+  wait (event, callback) {
     this.on(event, (...args) => {
+      let identifier;
+      let promise;
+
+      callback(...args, (id, cb) => {
+        identifier = id;
+        promise = cb;
+      });
+
       if (this.queue.get(event + '-' + identifier)) {
         return;
       }
 
       this.queue.set(event + '-' + identifier, true);
 
-      promise(...args)
+      promise()
         .then(() => this.queue.set(event + '-' + identifier, false));
     });
   }
