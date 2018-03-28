@@ -24,14 +24,22 @@ class CreateTask
     protected $description;
 
     /**
+     * The new task status.
+     *
+     * @var bool
+     */
+    protected $status;
+
+    /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(string $title, string $description)
+    public function __construct(string $title, string $description, bool $status = false)
     {
         $this->title = $title;
         $this->description = $description;
+        $this->status = $status;
     }
 
     /**
@@ -42,6 +50,7 @@ class CreateTask
         return Task::create([
             'title' => $this->title,
             'description' => $this->description,
+            'status' => $this->status,
         ]);
     }
 }
