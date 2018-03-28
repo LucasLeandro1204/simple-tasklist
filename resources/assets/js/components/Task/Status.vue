@@ -1,6 +1,6 @@
 <template>
   <i
-    :class="['text-indigo pl-3 pb-3 fa', status ? 'fa-check-square-o' : 'fa-square-o']"
+    :class="['text-indigo cursor-pointer pl-3 pb-3 fa', status ? 'fa-check-square-o' : 'fa-square-o']"
     @click.stop="$bus('toggleStatus', task)">
   </i>
 </template>

@@ -1,6 +1,12 @@
 <template>
-  <task-section title="Your Tasks">
+  <task-section class="relative" title="Your Tasks">
     <card :task="task" :key="task.id" v-for="task in tasks" />
+
+    <div class="buttons max-w-sm w-full pin-l">
+      <button class="ml-auto mr-6 flex align-center bg-indigo-light rounded-full text-white justify-center w-10 h-10">
+        <i class="fa fa-plus"></i>
+      </button>
+    </div>
   </task-section>
 </template>
 
@@ -68,3 +74,10 @@
     },
   };
 </script>
+
+<style scoped>
+  .buttons {
+    bottom: 15px;
+    position: fixed;
+  }
+</style>

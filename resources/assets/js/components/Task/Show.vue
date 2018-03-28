@@ -1,6 +1,8 @@
 <template>
   <task-section :title="task.title" :back="{ name: 'task.index' }" v-if="task">
-
+    <article class="flex">
+      <div v-html="content"></div>
+    </article>
   </task-section>
 
   <task-section title="Finding the task" :back="{ name: 'task.index' }" v-else-if="task === null">
@@ -13,6 +15,7 @@
 </template>
 
 <script>
+  import Marked from 'marked';
   import TaskSection from '@/Section.vue';
   import TaskService from 'services/task';
 
@@ -34,6 +37,12 @@
       return {
         task: null,
       };
+    },
+
+    computed: {
+      content () {
+        return Marked(this.task.description);
+      },
     },
 
     created () {

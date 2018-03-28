@@ -1,6 +1,6 @@
 <template>
   <div class="p-4 mb-4 shadow bg-white flex rounded">
-    <div @click="$router.push({ name: 'task.show', params: { id: task.id } })">
+    <div class="cursor-pointer" @click="$router.push({ name: 'task.show', params: { id: task.id } })">
       <h4 v-text="task.title"></h4>
       <p class="text-xs text-grey-darker mt-2" v-text="task.created_at"></p>
     </div>
