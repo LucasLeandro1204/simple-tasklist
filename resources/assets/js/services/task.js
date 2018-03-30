@@ -13,7 +13,9 @@ class Task {
 
   all () {
     if (this.cache.has('all')) {
-      return Promise.resolve({ data: this.cache.get('all') });
+      return Promise.resolve({
+        data: this.cache.get('all'),
+      });
     }
 
     return this.request.get()
@@ -32,14 +34,17 @@ class Task {
 
   find (id) {
     if (this.cache.has('all')) {
-      const data = this.cache.get('all').find(task => task.id == id);
+      const task = this.cache.get('all').find(t => t.id == id);
 
-      if (data) {
-        return Promise.resolve({ data });
+      if (task) {
+        return Promise.resolve({
+          data: task,
+        });
       }
 
-      return Promise.reject({ data });
+      return Promise.reject();
     }
+
     return this.request.get('/' + id);
   }
 };
