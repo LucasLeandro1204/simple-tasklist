@@ -18,15 +18,31 @@
         v-for="filter in filters">
       </button>
     </div>
+    <div v-if="tasks === false">
+      Loading...
+    </div>
+    <div v-else-if="tasks.length">
+      Show
+    </div>
+    <div v-else>
+      You do not have tasks =(
+    </div>
   </section>
 </template>
-{
+
 <script>
+  import TaskService from 'services/task';
+
   export default {
     data () {
       return {
+        tasks: false,
         activeFilter: 'All',
       };
+    },
+
+    created () {
+      this.fetch();
     },
 
     computed: {
@@ -51,6 +67,19 @@
             },
           },
         ];
+      },
+    },
+
+    methods: {
+      fetch () {
+        const before = Date.now();
+
+        TaskService.all()
+          .then(({ data }) => {
+            const time = 2000 + Date.now() - before;
+
+            setTimeout(() => this.tasks = data, time);
+          });
       },
     },
   };
