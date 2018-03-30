@@ -1,11 +1,14 @@
 <template>
   <section class="rounded-sm text-black">
-    <header class="flex px-8 py-6 bg-indigo-lighter text-white rounded-tl rounded-tr">
+    <header class="flex px-8 py-6 bg-indigo-lighter text-white rounded-tl rounded-tr relative">
       <h1 class="text-5xl font-normal mr-2">10</h1>
       <div class="self-center">
         <p class="font-bold">Tasks</p>
         <p class="text-sm">/ 15</p>
       </div>
+      <button class="flex w-10 h-10 text-white flex shadow-md rounded-full bg-indigo-dark absolute pin-r pin-b -mb-5 mr-8">
+        <i class="fa fa-plus m-auto"></i>
+      </button>
     </header>
     <div class="border-b px-4">
       <button :class="['py-4 px-2 -mb-px text-grey-darkest font-bold text-xs border-b no-outline focus:border-indigo-lighter hover:border-indigo-lighter', { 'border-indigo': filter.name == activeFilter }]"
@@ -53,6 +56,8 @@
   };
 </script>
 
-<style lang="scss" scoped>
-
+<style scoped>
+  .fa-plus {
+    font-size: 14px;
+  }
 </style>
