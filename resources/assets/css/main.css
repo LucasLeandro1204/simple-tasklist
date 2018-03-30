@@ -15,7 +15,7 @@
   * @import "tailwindcss/components";
   */
  @tailwind components;
- 
+
  /**
   * Here you would add any of your custom component classes; stuff that you'd
   * want loaded *before* the utilities so that the utilities could still
@@ -31,7 +31,7 @@
   * @import "components/buttons";
   * @import "components/forms";
   */
- 
+
  /**
   * This injects all of Tailwind's utility classes, generated based on your
   * config file.
@@ -41,7 +41,7 @@
   * @import "tailwindcss/utilities";
   */
  @tailwind utilities;
- 
+
  /**
   * Here you would add any custom utilities you need that don't come out of the
   * box with Tailwind.
@@ -56,4 +56,7 @@
   * @import "utilities/background-patterns";
   * @import "utilities/skew-transforms";
   */
- 
+
+  .no-outline:focus {
+    outline: 0;
+  }

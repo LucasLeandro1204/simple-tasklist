@@ -836,7 +836,7 @@ module.exports = {
     backgroundPosition: ["responsive"],
     backgroundRepeat: ["responsive"],
     backgroundSize: ["responsive"],
-    borderColors: ["responsive", "hover"],
+    borderColors: ["responsive", "hover", "focus"],
     borderRadius: ["responsive"],
     borderStyle: ["responsive"],
     borderWidths: ["responsive"],
@@ -892,10 +892,10 @@ module.exports = {
   */
 
   plugins: [
-    require("tailwindcss/plugins/container")({
+    // require("tailwindcss/plugins/container")({
       // center: true,
       // padding: '1rem',
-    })
+    // })
   ],
 
   /*
