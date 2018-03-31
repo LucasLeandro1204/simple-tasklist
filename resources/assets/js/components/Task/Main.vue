@@ -35,11 +35,25 @@
 
     <div v-else-if="tasks.length">
       <task :task="task" :key="task.id" v-for="task in filtered" @toggle="toggleStatus(task)" />
+
+      <template v-if="! filtered.length">
+        <icon-announcement icon="fa-sign-language" v-if="activeFilter == 'Remain'">
+          <h4 class="mb-1">You completed all your tasks</h4>
+          <p>Create more, you can't stop xD</p>
+        </icon-announcement>
+
+        <icon-announcement icon="fa-meh-o" v-if="activeFilter == 'Done'">
+          <h4 class="mb-1">Whaaattt???</h4>
+          <p>GO FINISH YOUR TASKS!!!!</p>
+        </icon-announcement>
+      </template>
     </div>
 
-    <div v-else>
-      You do not have tasks =(
-    </div>
+    <icon-announcement icon="fa-file-o" v-else>
+      <h4 class="mb-1">You don't have any tasks</h4>
+      <p>Try to create some =D</p>
+    </icon-announcement>
+
   </task-section>
 </template>
 
@@ -49,6 +63,7 @@
   import Service from 'services/task';
   import TaskSection from '@/Section.vue';
   import SectionButton from '@/SectionButton.vue';
+  import IconAnnouncement from '@/IconAnnouncement.vue';
   import VueContentLoading from 'vue-content-loading';
 
   export default {
@@ -56,6 +71,7 @@
       Task,
       TaskSection,
       SectionButton,
+      IconAnnouncement,
       VueContentLoading,
     },
 

@@ -7,7 +7,14 @@
 
       <textarea class="p-2 w-full mb-3 rounded bg-indigo-lightest" rows="10" placeholder="Your task description (you can use markdown =D)" v-model="description"></textarea>
 
-      <button class="bg-indigo text-white rounded px-3 py-2 shadow-md hover:shadow-lg" type="submit" v-text="button"></button>
+      <button
+        class="bg-indigo text-white rounded px-3 py-2 shadow-md hover:shadow-lg"
+        :class="{ 'bg-indigo-light cursor-not-allowed': status }"
+        type="submit"
+        v-text="button">
+      </button>
+
+      <i class="ml-2 text-indigo-light fa fa-spinner fa-spin" v-if="status"></i>
     </form>
   </task-section>
 
@@ -28,6 +35,7 @@
     data () {
       return {
         title: '',
+        status: false,
         task: undefined,
         description: '',
       };
@@ -69,6 +77,8 @@
 
     methods: {
       save () {
+        this.status = true;
+
         this.operation()
           .then(({ data }) => {
             this.$router.push({
