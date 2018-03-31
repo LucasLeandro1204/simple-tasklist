@@ -3,7 +3,7 @@
     <p slot="header" class="font-bold" v-text="task.title"></p>
 
     <template slot="buttons">
-      <button class="flex w-10 h-10 ml-2 text-white flex shadow-md rounded-full bg-indigo-dark">
+      <button class="flex w-10 h-10 ml-2 text-white flex shadow-md rounded-full bg-indigo-dark" @click.prevent="toggle">
         <i class="fa m-auto" :class="task.status ? 'fa-check' : 'fa-circle-o'"></i>
       </button>
     </template>
@@ -21,6 +21,7 @@
   import Marked from 'marked';
   import Moment from 'moment';
   import Service from 'services/task';
+  import { wait } from 'core/helpers';
   import TaskSection from '@/Section.vue';
 
   export default {
@@ -62,6 +63,24 @@
         .then(({ data }) => {
           this.task = data;
         });
+    },
+
+    methods: {
+      toggle () {
+        wait(this.id, () => {
+          const status = this.task.status = ! this.task.status;
+
+          return Service.update(this.id, {
+            status,
+          })
+          .then(({ data }) => {
+            this.task = data;
+          })
+          .catch(() => {
+            this.task.status = ! status;
+          });
+        });
+      },
     },
   };
 </script>

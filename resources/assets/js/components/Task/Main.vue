@@ -27,9 +27,11 @@
     <div v-if="tasks === false">
       Loading...
     </div>
+
     <div v-else-if="tasks.length">
       <task :task="task" :key="task.id" v-for="task in filtered" @toggle="toggleStatus(task)" />
     </div>
+
     <div v-else>
       You do not have tasks =(
     </div>
