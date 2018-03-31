@@ -35,7 +35,7 @@ class TaskController extends Controller
     {
         $data = array_values($request->validate([
             'title' => 'required|string|max:80',
-            'description' => 'required|string|max:2000',
+            'description' => 'string|max:2000',
         ]));
 
         $task = Create::dispatchNow(...$data);

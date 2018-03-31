@@ -45,15 +45,17 @@ class TaskControllerTest extends TestCase
         $response = $this->json('POST', route('task.store'), [
             //
         ]);
+
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
-                'title', 'description',
+                'title',
             ]);
 
         $response = $this->json('POST', route('task.store'), [
             'title' => str_pad('', 100, '-'),
             'description' => str_pad('', 2048, '-'),
         ]);
+
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
                 'title', 'description',
@@ -81,6 +83,26 @@ class TaskControllerTest extends TestCase
         $this->assertEquals($task->id, $json['id']);
         $this->assertEquals($task->title, $json['title']);
         $this->assertEquals($task->description, $json['description']);
+
+        $task->delete();
+
+        $response = $this->json('POST', route('task.store'), [
+            'title' => 'Title',
+        ]);
+
+        $json = $response->decodeResponseJson();
+
+        $response->assertStatus(201)
+            ->assertJsonStructure([
+                'id', 'title', 'description', 'status', 'created_at', 'updated_at',
+            ])
+            ->assertJsonFragment([
+                'title' => 'Title',
+                'status' => false,
+            ]);
+
+        $this->assertNotNull($task = Task::first());
+        $this->assertNull($task->description);
     }
 
     /** @test */

@@ -35,7 +35,7 @@ class CreateTask
      *
      * @return void
      */
-    public function __construct(string $title, string $description, bool $status = false)
+    public function __construct(string $title, string $description = null, bool $status = false)
     {
         $this->title = $title;
         $this->description = $description;
