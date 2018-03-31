@@ -10,7 +10,8 @@
 
     <template slot="section-buttons">
       <section-button
-        icon="fa-pencil" />
+        icon="fa-pencil"
+        @click.native.prevent="$router.push({ name: 'task.edit', params: { id: task.id } })" />
       <section-button
         icon="fa-trash"
         @click.native.prevent="deleteTask" />

@@ -3,7 +3,7 @@ import Axios from 'axios';
 class Task {
   constructor (axios) {
     this.request = axios.create({
-      baseURL: 'api/task',
+      baseURL: '/api/task',
       headers: {
         'X-Requested-With': 'XMLHttpRequest',
       },
@@ -69,7 +69,7 @@ class Task {
       return Promise.reject();
     }
 
-    return this.request.get('/' + id);
+    return this.request.get(id);
   }
 
   delete (id) {
