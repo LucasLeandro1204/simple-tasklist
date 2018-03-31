@@ -1,5 +1,5 @@
 <template>
-  <task-section :back="{ name: 'task.index' }">
+  <task-section :back="{ name: id ? 'task.show' : 'task.index', params: { id, } }" v-if="id ? task == true : true">
     <h1 class="text-3xl font-normal mr-2" slot="header" v-text="header"></h1>
 
     <form class="p-4" @submit.prevent="save">
@@ -10,15 +10,19 @@
       <button class="bg-indigo text-white rounded px-3 py-2 shadow-md hover:shadow-lg" type="submit" v-text="button"></button>
     </form>
   </task-section>
+
+  <task-not-found v-else-if="task === false" />
 </template>
 
 <script>
   import Service from 'services/task';
   import TaskSection from '@/Section.vue';
+  import TaskNotFound from './NotFound.vue';
 
   export default {
     components: {
       TaskSection,
+      TaskNotFound,
     },
 
     data () {

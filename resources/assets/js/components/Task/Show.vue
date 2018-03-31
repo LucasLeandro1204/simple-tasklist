@@ -24,6 +24,8 @@
       <p><span class="font-bold">Last update </span> {{ task.updated_at | fromNow }} </p>
     </div>
   </task-section>
+
+  <task-not-found v-else-if="task === false" />
 </template>
 
 <script>
@@ -32,6 +34,7 @@
   import Service from 'services/task';
   import { wait } from 'core/helpers';
   import TaskSection from '@/Section.vue';
+  import TaskNotFound from './NotFound.vue';
   import SectionButton from '@/SectionButton.vue';
 
   export default {
@@ -46,6 +49,7 @@
 
     components: {
       TaskSection,
+      TaskNotFound,
       SectionButton,
     },
 
@@ -65,7 +69,7 @@
 
     data () {
       return {
-        task: false,
+        task: undefined,
       };
     },
 
@@ -73,6 +77,9 @@
       Service.find(this.id)
         .then(({ data }) => {
           this.task = data;
+        })
+        .catch(() => {
+          this.task = false;
         });
     },
 

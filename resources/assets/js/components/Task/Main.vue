@@ -23,15 +23,17 @@
         v-for="filter in filters" />
     </template>
 
-    <div class="p-4 border-b" :key="i" v-for="i in 10" v-if="tasks === false">
-      <vue-content-loading :width="300" :height="14">
-        <circle cx="7" cy="7" r="7"></circle>
-        <rect x="21" y="1" width="150" height="11"></rect>
-        <circle cx="293" cy="7" r="7"></circle>
-      </vue-content-loading>
+    <div v-if="tasks === false">
+      <div class="p-4 border-b" v-for="i in 10">
+        <vue-content-loading :width="300" :height="14">
+          <circle cx="7" cy="7" r="7"></circle>
+          <rect x="21" y="1" width="150" height="11"></rect>
+          <circle cx="293" cy="7" r="7"></circle>
+        </vue-content-loading>
+      </div>
     </div>
 
-   <div v-else-if="tasks.length">
+    <div v-else-if="tasks.length">
       <task :task="task" :key="task.id" v-for="task in filtered" @toggle="toggleStatus(task)" />
     </div>
 
