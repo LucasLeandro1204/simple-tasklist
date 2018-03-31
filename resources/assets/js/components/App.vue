@@ -9,5 +9,9 @@
 
   export default {
     router,
+
+    data: {
+      tasks: false,
+    },
   };
 </script>

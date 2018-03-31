@@ -6,9 +6,11 @@
         <p class="font-bold">Tasks</p>
         <p class="text-sm">/ {{ all.length }}</p>
       </div>
-      <button class="flex w-10 h-10 text-white flex shadow-md rounded-full bg-indigo-dark absolute pin-r pin-b -mb-5 mr-8">
-        <i class="fa fa-plus m-auto"></i>
-      </button>
+      <div class="flex absolute pin-r pin-b -mb-5 mr-8">
+        <button class="flex w-10 h-10 ml-2 text-white flex shadow-md rounded-full bg-indigo-dark">
+          <i class="fa fa-plus m-auto"></i>
+        </button>
+      </div>
     </header>
     <div class="border-b px-4">
       <button
@@ -44,7 +46,6 @@
 
     data () {
       return {
-        tasks: false,
         activeFilter: 'All',
       };
     },
@@ -54,6 +55,16 @@
     },
 
     computed: {
+      tasks: {
+        get () {
+          return this.$root.tasks;
+        },
+
+        set (value) {
+          this.$root.tasks = value;
+        }
+      },
+
       done () {
         return this.tasks ? this.tasks.filter(task => task.status) : [];
       },
@@ -130,9 +141,3 @@
     },
   };
 </script>
-
-<style scoped>
-  .fa-plus {
-    font-size: 14px;
-  }
-</style>
