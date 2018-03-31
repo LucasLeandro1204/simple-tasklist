@@ -2,18 +2,25 @@
   <task-section v-if="this.task" :back="{ name: 'task.index' }">
     <p slot="header" class="font-bold" v-text="task.title"></p>
 
-    <template slot="buttons">
+    <template slot="header-buttons">
       <button class="flex w-10 h-10 ml-2 text-white flex shadow-md rounded-full bg-indigo-dark" @click.prevent="toggle">
         <i class="fa m-auto" :class="task.status ? 'fa-check' : 'fa-circle-o'"></i>
       </button>
     </template>
 
-    <div class="border-b p-4 text-xs">
-      <p class="mb-1"><span class="font-bold mr-1 text-grey-darkest">Created at:</span> {{ task.created_at | fromNow }} </p>
-      <p><span class="font-bold mr-1 text-grey-darkest">Last update:</span> {{ task.updated_at | fromNow }} </p>
-    </div>
+    <template slot="section-buttons">
+      <section-button
+        icon="fa-pencil" />
+      <section-button
+        icon="fa-trash" />
+    </template>
 
-    <div class="px-4 py-4 text-sm" v-html="content" v-if="task.description"></div>
+    <div class="border-b px-4 py-4 text-sm" v-html="content" v-if="task.description"></div>
+
+    <div class="p-4 text-xs text-grey-dark">
+      <p class="mb-1"><span class="font-bold ">Created </span> {{ task.created_at | fromNow }} </p>
+      <p><span class="font-bold">Last update </span> {{ task.updated_at | fromNow }} </p>
+    </div>
   </task-section>
 </template>
 
@@ -23,6 +30,7 @@
   import Service from 'services/task';
   import { wait } from 'core/helpers';
   import TaskSection from '@/Section.vue';
+  import SectionButton from '@/SectionButton.vue';
 
   export default {
     props: {
@@ -36,6 +44,7 @@
 
     components: {
       TaskSection,
+      SectionButton,
     },
 
     filters: {

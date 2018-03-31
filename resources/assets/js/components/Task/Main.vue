@@ -8,22 +8,21 @@
       </div>
     </template>
 
-    <template slot="buttons">
+    <template slot="header-buttons">
       <button class="flex w-10 h-10 ml-2 text-white flex shadow-md rounded-full bg-indigo-dark">
         <i class="fa fa-plus m-auto"></i>
       </button>
     </template>
 
-    <div class="border-b px-4">
-      <button
-        class="py-4 px-2 -mb-px text-grey-darkest font-bold text-xs border-b no-outline focus:border-indigo hover:border-indigo"
-        :class="{ 'border-indigo': filter == activeFilter }"
-        :key="filter"
-        v-text="filter"
-        @click.prevent="activeFilter = filter"
-        v-for="filter in filters">
-      </button>
-    </div>
+    <template slot="section-buttons">
+      <section-button
+        :icon="filter.icon"
+        :class="{ 'border-indigo': filter.name == activeFilter }"
+        :key="filter.name"
+        @click.native.prevent="activeFilter = filter.name"
+        v-for="filter in filters" />
+    </template>
+
     <div v-if="tasks === false">
       Loading...
     </div>
@@ -43,11 +42,13 @@
   import { wait } from 'core/helpers';
   import Service from 'services/task';
   import TaskSection from '@/Section.vue';
+  import SectionButton from '@/SectionButton.vue';
 
   export default {
     components: {
       Task,
       TaskSection,
+      SectionButton,
     },
 
     data () {
@@ -111,7 +112,18 @@
 
       filters () {
         return [
-          'All', 'Remain', 'Done',
+          {
+            name: 'All',
+            icon: 'fa-list',
+          },
+          {
+            name: 'Remain',
+            icon: 'fa-circle-o',
+          },
+          {
+            name: 'Done',
+            icon: 'fa-check',
+          }
         ];
       },
     },

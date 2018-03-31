@@ -7,10 +7,14 @@
         <i class="fa fa-angle-left"></i>
       </button>
 
-      <div class="flex buttons absolute pin-r pin-b -mb-5 mr-8">
-        <slot name="buttons"></slot>
+      <div class="flex buttons absolute pin-r pin-b -mb-5 mr-8" v-if="$slots['header-buttons']">
+        <slot name="header-buttons"></slot>
       </div>
     </header>
+
+    <div class="border-b px-4 flex" v-if="$slots['section-buttons']">
+      <slot name="section-buttons"></slot>
+    </div>
 
     <slot></slot>
   </section>
