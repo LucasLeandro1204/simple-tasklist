@@ -24,13 +24,7 @@
       Loading...
     </div>
     <div v-else-if="tasks.length">
-      <div class="flex border-b pl-4 text-grey-darkest text-sm" :class="{ 'text-grey': task.status }" :key="task.id" v-for="task in filtered">
-        <i class="fa mr-2 text-indigo my-auto" :class="task.status ? 'fa-check-circle-o text-indigo-lighter' : 'fa-circle-o'"></i>
-        <p class="py-4" :class="{ 'line-through': task.status }" v-text="task.title"></p>
-        <button class="ml-auto px-4" @click.prevent>
-          <i class="fa fa-angle-right my-auto"></i>
-        </button>
-      </div>
+      <task :task="task" :key="task.id" v-for="task in filtered" />
     </div>
     <div v-else>
       You do not have tasks =(
@@ -39,9 +33,14 @@
 </template>
 
 <script>
+  import Task from './Card.vue';
   import TaskService from 'services/task';
 
   export default {
+    components: {
+      Task,
+    },
+
     data () {
       return {
         tasks: false,
