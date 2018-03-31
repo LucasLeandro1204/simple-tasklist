@@ -1,17 +1,19 @@
 <template>
-  <section class="rounded-sm text-black">
-    <header class="flex px-8 py-6 bg-indigo-lighter text-white rounded-tl rounded-tr relative">
+  <task-section>
+    <template slot="header">
       <h1 class="text-5xl font-normal mr-2" v-text="total"></h1>
       <div class="self-center">
         <p class="font-bold">Tasks</p>
         <p class="text-sm">/ {{ all.length }}</p>
       </div>
-      <div class="flex absolute pin-r pin-b -mb-5 mr-8">
-        <button class="flex w-10 h-10 ml-2 text-white flex shadow-md rounded-full bg-indigo-dark">
-          <i class="fa fa-plus m-auto"></i>
-        </button>
-      </div>
-    </header>
+    </template>
+
+    <template slot="buttons">
+      <button class="flex w-10 h-10 ml-2 text-white flex shadow-md rounded-full bg-indigo-dark">
+        <i class="fa fa-plus m-auto"></i>
+      </button>
+    </template>
+
     <div class="border-b px-4">
       <button
         class="py-4 px-2 -mb-px text-grey-darkest font-bold text-xs border-b no-outline focus:border-indigo hover:border-indigo"
@@ -31,17 +33,19 @@
     <div v-else>
       You do not have tasks =(
     </div>
-  </section>
+  </task-section>
 </template>
 
 <script>
   import Task from './Card.vue';
   import { wait } from 'core/helpers';
   import Service from 'services/task';
+  import TaskSection from '@/Section.vue';
 
   export default {
     components: {
       Task,
+      TaskSection,
     },
 
     data () {
