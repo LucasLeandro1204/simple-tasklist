@@ -28,8 +28,32 @@ class Task {
       });
   }
 
+  store (data) {
+    return this.request.post('/', data)
+      .then(({ data }) => {
+        if (this.cache.has('all')) {
+          this.cache.get('all').push(data);
+        }
+
+        return {
+          data,
+        };
+      });
+  }
+
   update (id, data) {
-    return this.request.put('/' + id, data);
+    return this.request.put('/' + id, data)
+      .then(({ data }) => {
+        if (this.cache.has('all')) {
+          const tasks = this.cache.get('all');
+
+          tasks[tasks.findIndex(task => task.id == id)] = data;
+        }
+
+        return {
+          data,
+        };
+      });
   }
 
   find (id) {

@@ -9,7 +9,7 @@
     </template>
 
     <template slot="header-buttons">
-      <button class="flex w-10 h-10 ml-2 text-white flex shadow-md rounded-full bg-indigo-dark">
+      <button @click.prevent="$router.push({ name: 'task.create' })" class="flex w-10 h-10 ml-2 text-white flex shadow-md rounded-full bg-indigo-dark">
         <i class="fa fa-plus m-auto"></i>
       </button>
     </template>
