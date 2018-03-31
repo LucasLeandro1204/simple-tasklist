@@ -11,6 +11,6 @@ const wait = (id, callback) => {
     .then(() => waitCache.set(id, false));
 };
 
-export default {
+export {
   wait,
 };

@@ -24,7 +24,7 @@
       Loading...
     </div>
     <div v-else-if="tasks.length">
-      <task :task="task" :key="task.id" v-for="task in filtered" />
+      <task :task="task" :key="task.id" v-for="task in filtered" @toggle="toggleStatus(task)" />
     </div>
     <div v-else>
       You do not have tasks =(
@@ -34,7 +34,8 @@
 
 <script>
   import Task from './Card.vue';
-  import TaskService from 'services/task';
+  import { wait } from 'core/helpers';
+  import Service from 'services/task';
 
   export default {
     components: {
@@ -99,10 +100,27 @@
     },
 
     methods: {
+      toggleStatus (task) {
+        wait(task.id, () => {
+          task.status = ! task.status;
+          const index = this.tasks.findIndex(t => t.id == task.id);
+
+          return Service.update(task.id, {
+            status: task.status,
+          })
+          .then(({ data }) => {
+            this.$set(this.tasks, index, data);
+          })
+          .catch(() => {
+            task.status = ! task.status;
+          });
+        });
+      },
+
       fetch () {
         const before = Date.now();
 
-        TaskService.all()
+        Service.all()
           .then(({ data }) => {
             const time = 2000 + Date.now() - before;
 
