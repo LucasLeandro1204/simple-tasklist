@@ -17,7 +17,7 @@ class TaskController extends Controller
      */
     public function index(): Collection
     {
-        return Task::get();
+        return Task::orderBy('id', 'desc')->get();
     }
 
     /**
@@ -35,7 +35,7 @@ class TaskController extends Controller
     {
         $data = array_values($request->validate([
             'title' => 'required|string|max:80',
-            'description' => 'string|max:2000',
+            'description' => 'nullable|string|max:2000',
         ]));
 
         $task = Create::dispatchNow(...$data);
@@ -50,7 +50,7 @@ class TaskController extends Controller
     {
         $data = $request->validate([
             'title' => 'string|max:80',
-            'description' => 'string|max:2000',
+            'description' => 'nullable|string|max:2000',
             'status' => 'boolean',
         ]);
 

@@ -32,7 +32,7 @@ class Task {
     return this.request.post('/', data)
       .then(({ data }) => {
         if (this.cache.has('all')) {
-          this.cache.get('all').push(data);
+          this.cache.get('all').unshift(data);
         }
 
         return {
@@ -69,7 +69,7 @@ class Task {
       return Promise.reject();
     }
 
-    return this.request.get(id);
+    return this.request.get('/' + id);
   }
 
   delete (id) {

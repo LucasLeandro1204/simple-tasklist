@@ -44,7 +44,6 @@
 
       Service.find(this.id)
         .then(({ data }) => {
-          console.log(data);
           this.task = true;
           this.title = data.title;
           this.description = data.description;
