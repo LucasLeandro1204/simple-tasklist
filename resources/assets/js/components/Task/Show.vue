@@ -12,7 +12,8 @@
       <section-button
         icon="fa-pencil" />
       <section-button
-        icon="fa-trash" />
+        icon="fa-trash"
+        @click.native.prevent="deleteTask" />
     </template>
 
     <div class="border-b px-4 py-4 text-sm" v-html="content" v-if="task.description"></div>
@@ -75,6 +76,21 @@
     },
 
     methods: {
+      deleteTask () {
+        const answer = window.confirm('Do you really want to delete this task?');
+
+        if (! answer) {
+          return;
+        }
+
+        Service.delete(this.id)
+          .then(() => {
+            this.$router.push({
+              name: 'task.index',
+            });
+          });
+      },
+
       toggle () {
         wait(this.id, () => {
           const status = this.task.status = ! this.task.status;

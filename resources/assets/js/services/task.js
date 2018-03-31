@@ -47,6 +47,16 @@ class Task {
 
     return this.request.get('/' + id);
   }
+
+  delete (id) {
+    if (this.cache.has('all')) {
+      const tasks = this.cache.get('all');
+
+      tasks.splice(tasks.findIndex(task => task.id == id), 1);
+    }
+
+    return this.request.delete('/' + id);
+  }
 };
 
 export default new Task(Axios);
