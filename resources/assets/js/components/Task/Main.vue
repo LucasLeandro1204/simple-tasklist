@@ -11,7 +11,9 @@
       </button>
     </header>
     <div class="border-b px-4">
-      <button :class="['py-4 px-2 -mb-px text-grey-darkest font-bold text-xs border-b no-outline focus:border-indigo-lighter hover:border-indigo-lighter', { 'border-indigo': filter == activeFilter }]"
+      <button
+        class="py-4 px-2 -mb-px text-grey-darkest font-bold text-xs border-b no-outline focus:border-indigo hover:border-indigo"
+        :class="{ 'border-indigo': filter == activeFilter }"
         :key="filter"
         v-text="filter"
         @click.prevent="activeFilter = filter"
@@ -23,9 +25,9 @@
     </div>
     <div v-else-if="tasks.length">
       <div class="flex border-b pl-4 text-grey-darkest text-sm" :class="{ 'text-grey': task.status }" :key="task.id" v-for="task in filtered">
-        <i :class="['fa mr-2 text-indigo my-auto', task.status ? 'fa-check-circle-o text-indigo-lighter' : 'fa-circle-o']"></i>
+        <i class="fa mr-2 text-indigo my-auto" :class="task.status ? 'fa-check-circle-o text-indigo-lighter' : 'fa-circle-o'"></i>
         <p class="py-4" :class="{ 'line-through': task.status }" v-text="task.title"></p>
-        <button class="ml-auto h-full px-4" @click.prevent>
+        <button class="ml-auto px-4" @click.prevent>
           <i class="fa fa-angle-right my-auto"></i>
         </button>
       </div>
@@ -92,7 +94,7 @@
 
       filters () {
         return [
-          'All', 'Done', 'Remain',
+          'All', 'Remain', 'Done',
         ];
       },
     },
