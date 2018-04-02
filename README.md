@@ -2,6 +2,12 @@
 
 Laravel + Vue + TailwindCSS
 
+<p align="center">
+
+![](resources/assets/images/print.png)
+
+</p>
+
 ### Requirements
 
 - Composer
