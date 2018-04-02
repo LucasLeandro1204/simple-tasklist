@@ -20,7 +20,7 @@ mix.webpackConfig({
 
 mix
   .js(paths.js + '/app.js', 'public/js')
-  .postCss(paths.css + 'main.css', 'public/css', [
+  .postCss(paths.css + 'app.css', 'public/css', [
     tailwindcss('./tailwind.js')
   ])
   .purgeCss();
