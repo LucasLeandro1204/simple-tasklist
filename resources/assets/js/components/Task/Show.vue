@@ -17,7 +17,7 @@
         @click.native.prevent="deleteTask" />
     </template>
 
-    <div class="border-b px-4 py-4 text-sm" v-html="content" v-if="task.description"></div>
+    <div class="border-b px-4 py-4 text-sm text-grey-darkest markdown" v-html="content" v-if="task.description"></div>
 
     <div class="p-4 text-xs text-grey-dark">
       <p class="mb-1"><span class="font-bold ">Created </span> {{ task.created_at | fromNow }} </p>
@@ -117,3 +117,15 @@
     },
   };
 </script>
+
+<style lang="scss">
+  .markdown {
+    blockquote, dl, dd, h1, h2, h3, h4, h5, h6, figure, p, pre {
+      margin-bottom: 5px;
+    }
+
+    ul {
+      padding-left: 2rem;
+    }
+  }
+</style>
