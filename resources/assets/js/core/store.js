@@ -73,6 +73,8 @@ const task = () => {
 };
 
 const tasks = () => {
+  const busy = new Map();
+
   /**
    * @type {object}
    * @property {null|false|array} tasks Array with all tasks
@@ -84,10 +86,10 @@ const tasks = () => {
   };
 
   const getters = {
-    filtered: ({ tasks }, g) => g.filter.execute(tasks || []),
     fetching: ({ tasks }) => tasks === null,
     fetched: ({ tasks }) => Array.isArray(tasks),
     count: ({ tasks }, g) => g.fetched ? tasks.length : 0,
+    filtered: ({ tasks }, g) => g.filter.execute(tasks || []),
     filter: ({ filters, filter }) => filters.find(f => f.name == filter),
   };
 
@@ -99,12 +101,38 @@ const tasks = () => {
     'SET_FILTER' (state, filter) {
       state.filter = filter;
     },
+
+    'SET_TASK_STATUS' (state, { id, status }) {
+      const task = state.tasks.find(task => task.id == id);
+
+      if (! task) {
+        return;
+      }
+
+      task.status = status;
+    },
   };
 
   const actions = {
     fetch: ({ commit }) => Axios.get('task')
       .then(({ data }) => commit('SET_TASKS', data))
       .catch(() => commit('SET_TASKS', false)),
+
+     updateStatus: ({ commit }, { id, status }) => {
+      if (busy.has(id)) {
+        return Promise.resolve();
+      }
+
+      busy.set(id, true);
+
+      commit('SET_TASK_STATUS', { id, status });
+
+      return Axios.put('task/' + id, {
+          status,
+        })
+        .catch(() => commit('SET_TASK_STATUS', { id, status: ! status }))
+        .finally(() => busy.delete(id));
+     },
   };
 
   return {
