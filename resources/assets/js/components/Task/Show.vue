@@ -12,6 +12,7 @@
       <section-button
         icon="fa-pencil"
         @click.native.prevent="$router.push({ name: 'task.edit', params: { id: task.id } })" />
+
       <section-button
         icon="fa-trash"
         @click.native.prevent="deleteTask" />
@@ -30,7 +31,6 @@
 
 <script>
   import Marked from 'marked';
-  // import Service from 'services/task';
   import TaskSection from '@/Section.vue';
   import TaskNotFound from './NotFound.vue';
   import SectionButton from '@/SectionButton.vue';
