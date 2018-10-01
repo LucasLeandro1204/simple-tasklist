@@ -1,5 +1,5 @@
 <template>
-  <task-section v-if="this.task" :back="{ name: 'task.index' }">
+  <task-section v-if="task" :back="{ name: 'task.index' }">
     <p slot="header" class="font-bold" v-text="task.title"></p>
 
     <template slot="header-buttons">
@@ -30,7 +30,7 @@
 
 <script>
   import Marked from 'marked';
-  import Service from 'services/task';
+  // import Service from 'services/task';
   import TaskSection from '@/Section.vue';
   import TaskNotFound from './NotFound.vue';
   import SectionButton from '@/SectionButton.vue';

@@ -22,7 +22,7 @@
 </template>
 
 <script>
-  import Service from 'services/task';
+  // import Service from 'services/task';
   import TaskSection from '@/Section.vue';
   import TaskNotFound from './NotFound.vue';
 
