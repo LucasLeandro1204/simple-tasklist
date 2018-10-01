@@ -24,7 +24,7 @@
     </template>
 
     <div v-if="tasks === false">
-      <div class="p-4 border-b" v-for="i in 10">
+      <div :key="i" class="p-4 border-b" v-for="i in 10">
         <vue-content-loading :width="300" :height="14">
           <circle cx="7" cy="7" r="7"></circle>
           <rect x="21" y="1" width="150" height="11"></rect>
