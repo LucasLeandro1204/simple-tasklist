@@ -28,7 +28,7 @@ const task = () => {
   const actions = {
     fetch: ({ commit }) => Axios.get('task')
       .then(({ data }) => commit('SET_TASKS', data.data)),
-    find: ({ commit }, task) => Axios.get('task/' + task)
+    find: ({ commit }, id) => Axios.get('task/' + id)
       .then(({ data }) => commit('SET_TASK', data)),
   };
 
