@@ -53,18 +53,16 @@
       <h4 class="mb-1">You don't have any tasks</h4>
       <p>Try to create some =D</p>
     </icon-announcement>
-
   </task-section>
 </template>
 
 <script>
   import Task from './Card.vue';
-  import { wait } from 'core/helpers';
-  import Service from 'services/task';
   import TaskSection from '@/Section.vue';
   import SectionButton from '@/SectionButton.vue';
-  import IconAnnouncement from '@/IconAnnouncement.vue';
   import VueContentLoading from 'vue-content-loading';
+  import IconAnnouncement from '@/IconAnnouncement.vue';
+  import { mapState, mapGetters, mapActions } from 'vuex';
 
   export default {
     components: {
@@ -81,59 +79,7 @@
       };
     },
 
-    created () {
-      this.fetch();
-    },
-
     computed: {
-      tasks: {
-        get () {
-          return this.$root.tasks;
-        },
-
-        set (value) {
-          this.$root.tasks = value;
-        }
-      },
-
-      done () {
-        return this.tasks ? this.tasks.filter(task => task.status) : [];
-      },
-
-      remain () {
-        return this.tasks ? this.tasks.filter(task => ! task.status) : [];
-      },
-
-      all () {
-        return this.tasks || [];
-      },
-
-      total () {
-        const all = this.all.length;
-
-        if (! all) {
-          return 0;
-        }
-
-        if (this.activeFilter == 'Remain') {
-          return all - this.done.length;
-        }
-
-        return all - this.remain.length;
-      },
-
-      filtered () {
-        if (this.activeFilter == 'Done') {
-          return this.done;
-        }
-
-        if (this.activeFilter == 'Remain') {
-          return this.remain;
-        }
-
-        return this.all;
-      },
-
       filters () {
         return [
           {
@@ -153,33 +99,7 @@
     },
 
     methods: {
-      toggleStatus (task) {
-        wait(task.id, () => {
-          task.status = ! task.status;
-          const index = this.tasks.findIndex(t => t.id == task.id);
 
-          return Service.update(task.id, {
-            status: task.status,
-          })
-          .then(({ data }) => {
-            this.$set(this.tasks, index, data);
-          })
-          .catch(() => {
-            task.status = ! task.status;
-          });
-        });
-      },
-
-      fetch () {
-        const before = Date.now();
-
-        Service.all()
-          .then(({ data }) => {
-            const time = 2000 + Date.now() - before;
-
-            setTimeout(() => this.tasks = data, time);
-          });
-      },
     },
   };
 </script>

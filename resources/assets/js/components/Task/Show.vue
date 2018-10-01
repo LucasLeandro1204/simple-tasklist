@@ -30,9 +30,7 @@
 
 <script>
   import Marked from 'marked';
-  import Moment from 'moment';
   import Service from 'services/task';
-  import { wait } from 'core/helpers';
   import TaskSection from '@/Section.vue';
   import TaskNotFound from './NotFound.vue';
   import SectionButton from '@/SectionButton.vue';
@@ -67,53 +65,7 @@
       },
     },
 
-    data () {
-      return {
-        task: undefined,
-      };
-    },
-
-    created () {
-      Service.find(this.id)
-        .then(({ data }) => {
-          this.task = data;
-        })
-        .catch(() => {
-          this.task = false;
-        });
-    },
-
     methods: {
-      deleteTask () {
-        const answer = window.confirm('Do you really want to delete this task?');
-
-        if (! answer) {
-          return;
-        }
-
-        Service.delete(this.id)
-          .then(() => {
-            this.$router.push({
-              name: 'task.index',
-            });
-          });
-      },
-
-      toggle () {
-        wait(this.id, () => {
-          const status = this.task.status = ! this.task.status;
-
-          return Service.update(this.id, {
-            status,
-          })
-          .then(({ data }) => {
-            this.task = data;
-          })
-          .catch(() => {
-            this.task.status = ! status;
-          });
-        });
-      },
     },
   };
 </script>

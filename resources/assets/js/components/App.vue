@@ -9,6 +9,7 @@
   import router from 'core/router';
 
   export default {
+    store,
     router,
 
     data: {
