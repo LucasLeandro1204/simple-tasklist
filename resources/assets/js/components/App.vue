@@ -5,6 +5,7 @@
 </template>
 
 <script>
+  import store from 'core/store';
   import router from 'core/router';
 
   export default {
