@@ -4,8 +4,7 @@ import Axios from 'core/axios';
 
 Vue.use(Vuex);
 
-const tasks = () => {
-
+const task = () => {
   /**
    * @type {object}
    * @property {null|object} task Single task (show)
@@ -45,6 +44,6 @@ export default new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
 
   modules: {
-    tasks,
+    task: task(),
   },
 });
