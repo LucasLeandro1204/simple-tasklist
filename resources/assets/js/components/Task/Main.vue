@@ -1,10 +1,10 @@
 <template>
   <task-section>
     <template slot="header">
-      <h1 class="text-5xl font-normal mr-2" v-text="total"></h1>
+      <h1 class="text-5xl font-normal mr-2" v-text="filtered.length"></h1>
       <div class="self-center">
         <p class="font-bold">Tasks</p>
-        <p class="text-sm">/ {{ all.length }}</p>
+        <p class="text-sm">/ {{ count }}</p>
       </div>
     </template>
 
@@ -16,14 +16,14 @@
 
     <template slot="section-buttons">
       <section-button
-        :icon="filter.icon"
-        :class="{ 'border-indigo': filter.name == activeFilter }"
-        :key="filter.name"
-        @click.native.prevent="activeFilter = filter.name"
-        v-for="filter in filters" />
+        :icon="icon"
+        :class="{ 'border-indigo': filter.name == name }"
+        :key="name"
+        @click.native.prevent="SET_FILTER(name)"
+        v-for="({ icon, name }) in filters" />
     </template>
 
-    <div v-if="tasks === false">
+    <div v-if="fetching">
       <div :key="i" class="p-4 border-b" v-for="i in 10">
         <vue-content-loading :width="300" :height="14">
           <circle cx="7" cy="7" r="7"></circle>
@@ -33,25 +33,18 @@
       </div>
     </div>
 
-    <div v-else-if="tasks.length">
+    <div v-else-if="fetched">
       <task :task="task" :key="task.id" v-for="task in filtered" @toggle="toggleStatus(task)" />
 
-      <template v-if="! filtered.length">
-        <icon-announcement icon="fa-sign-language" v-if="activeFilter == 'Remain'">
-          <h4 class="mb-1">You completed all your tasks</h4>
-          <p>Create more, you can't stop xD</p>
-        </icon-announcement>
-
-        <icon-announcement icon="fa-meh-o" v-if="activeFilter == 'Done'">
-          <h4 class="mb-1">Whaaattt???</h4>
-          <p>GO FINISH YOUR TASKS!!!!</p>
-        </icon-announcement>
-      </template>
+      <icon-announcement :icon="filter.empty.icon" v-if="! filtered.length">
+        <h4 class="mb-1" v-text="filter.empty.title"></h4>
+        <p v-text="filter.empty.subtitle"></p>
+      </icon-announcement>
     </div>
 
-    <icon-announcement icon="fa-file-o" v-else>
-      <h4 class="mb-1">You don't have any tasks</h4>
-      <p>Try to create some =D</p>
+    <icon-announcement icon="fa-warning" v-else>
+      <h4 class="mb-1">Some error occurred when fetching your tasks</h4>
+      <p>Please reload the page =/</p>
     </icon-announcement>
   </task-section>
 </template>
@@ -62,7 +55,7 @@
   import SectionButton from '@/SectionButton.vue';
   import VueContentLoading from 'vue-content-loading';
   import IconAnnouncement from '@/IconAnnouncement.vue';
-  import { mapState, mapGetters, mapActions } from 'vuex';
+  import { mapGetters, mapActions, mapMutations, mapState } from 'vuex';
 
   export default {
     components: {
@@ -73,33 +66,33 @@
       VueContentLoading,
     },
 
-    data () {
-      return {
-        activeFilter: 'All',
-      };
+    created () {
+      this.fetch();
     },
 
     computed: {
-      filters () {
-        return [
-          {
-            name: 'All',
-            icon: 'fa-list',
-          },
-          {
-            name: 'Remain',
-            icon: 'fa-circle-o',
-          },
-          {
-            name: 'Done',
-            icon: 'fa-check',
-          }
-        ];
-      },
+      ...mapState('tasks', [
+        'filters',
+        'filtered',
+      ]),
+
+      ...mapGetters('tasks', [
+        'count',
+        'filter',
+        'fetched',
+        'fetching',
+        'filtered',
+      ]),
     },
 
     methods: {
+      ...mapMutations('tasks', [
+        'SET_FILTER',
+      ]),
 
+      ...mapActions('tasks', [
+        'fetch',
+      ]),
     },
   };
 </script>

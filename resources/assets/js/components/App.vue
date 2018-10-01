@@ -11,9 +11,5 @@
   export default {
     store,
     router,
-
-    data: {
-      tasks: false,
-    },
   };
 </script>
