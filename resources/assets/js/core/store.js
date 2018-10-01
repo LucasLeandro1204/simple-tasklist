@@ -4,40 +4,61 @@ import Axios from 'core/axios';
 
 Vue.use(Vuex);
 
+const filters = [
+  {
+    name: 'All',
+    icon: 'fa-list',
+    empty: {
+      icon: 'fa-file-o',
+      title: 'You don\'t have any tasks',
+      subtitle: 'Try to create some =D',
+    },
+    execute: tasks => tasks,
+  },
+  {
+    name: 'Remain',
+    icon: 'fa-circle-o',
+    empty: {
+      icon: 'fa-sign-language',
+      title: 'You have completed all your tasks',
+      subtitle: 'Go add more tasks, you can\'t stop xD',
+    },
+    execute: tasks => tasks.filter(task => ! task.status),
+  },
+  {
+    name: 'Done',
+    icon: 'fa-check',
+    empty: {
+      icon: 'fa-meh-o',
+      title: 'Whaaattt???',
+      subtitle: 'GO FINISH YOUR TASKS!!!',
+    },
+    execute: tasks => tasks.filter(task => task.status),
+  }
+];
+
 const task = () => {
   /**
    * @type {object}
    * @property {null|false|object} task Single task object
-   * @property {null|false|array} tasks Array with all tasks
    */
   const state = {
     task: null,
-    tasks: null,
   };
 
   const getters = {
-    loadingTask: ({ task }) => task === null,
-    loadingTasks: ({ tasks }) => tasks === null,
-    hasTask: ({ tasks }, g) => ! g.loadingTask && typeof task === 'object',
-    hasTasks: ({ tasks }, g) => ! g.loadingTasks && tasks && tasks.length > 0,
+    fetching: ({ task }) => task === null,
+    fetched: ({ task }) => typeof task === 'object',
   };
 
   const mutations = {
-    'SET_TASKS' (state, tasks) {
-      state.tasks = tasks;
-    },
-
     'SET_TASK' (state, task) {
       state.task = task;
     },
   };
 
   const actions = {
-    fetch: ({ commit }) => Axios.get('task')
-      .then(({ data }) => commit('SET_TASKS', data.data))
-      .catch(() => commit('SET_TASKS', false)),
-
-    find: ({ commit }, id) => Axios.get('task/' + id)
+    fetch: ({ commit }, id) => Axios.get('task/' + id)
       .then(({ data }) => commit('SET_TASK', data))
       .catch(() => commit('SET_TASK', false)),
   };
@@ -45,6 +66,51 @@ const task = () => {
   return {
     state,
     actions,
+    getters,
+    mutations,
+    namespaced: true,
+  };
+};
+
+const tasks = () => {
+  /**
+   * @type {object}
+   * @property {null|false|array} tasks Array with all tasks
+   */
+  const state = {
+    filters,
+    tasks: null,
+    filter: 'All',
+  };
+
+  const getters = {
+    filtered: ({ tasks }, g) => g.filter.execute(tasks || []),
+    fetching: ({ tasks }) => tasks === null,
+    fetched: ({ tasks }) => Array.isArray(tasks),
+    count: ({ tasks }, g) => g.fetched ? tasks.length : 0,
+    filter: ({ filters, filter }) => filters.find(f => f.name == filter),
+  };
+
+  const mutations = {
+    'SET_TASKS' (state, tasks) {
+      state.tasks = tasks;
+    },
+
+    'SET_FILTER' (state, filter) {
+      state.filter = filter;
+    },
+  };
+
+  const actions = {
+    fetch: ({ commit }) => Axios.get('task')
+      .then(({ data }) => commit('SET_TASKS', data))
+      .catch(() => commit('SET_TASKS', false)),
+  };
+
+  return {
+    state,
+    actions,
+    getters,
     mutations,
     namespaced: true,
   };
@@ -55,5 +121,6 @@ export default new Vuex.Store({
 
   modules: {
     task: task(),
+    tasks: tasks(),
   },
 });
