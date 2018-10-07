@@ -23,7 +23,7 @@ const filters = [
       title: 'You have completed all your tasks',
       subtitle: 'Go add more tasks, you can\'t stop xD',
     },
-    execute: tasks => tasks.filter(task => !task.status),
+    execute: tasks => tasks.filter(task => ! task.status),
   },
   {
     name: 'Done',
@@ -52,7 +52,7 @@ const task = () => {
   };
 
   const mutations = {
-    'SET_TASK'(state, task) {
+    'SET_TASK' (state, task) {
       state.task = task;
     },
   };
@@ -94,15 +94,15 @@ const tasks = () => {
   };
 
   const mutations = {
-    'SET_TASKS'(state, tasks) {
+    'SET_TASKS' (state, tasks) {
       state.tasks = tasks;
     },
 
-    'SET_FILTER'(state, filter) {
+    'SET_FILTER' (state, filter) {
       state.filter = filter;
     },
 
-    'SET_TASK_STATUS'(state, { id, status }) {
+    'SET_TASK_STATUS' (state, { id, status }) {
       const task = state.tasks.find(task => task.id == id);
 
       if (! task) {
@@ -130,7 +130,7 @@ const tasks = () => {
       return Axios.put('task/' + id, {
         status,
       })
-        .catch(() => commit('SET_TASK_STATUS', { id, status: !status }))
+        .catch(() => commit('SET_TASK_STATUS', { id, status: ! status }))
         .finally(() => busy.delete(id));
     },
 

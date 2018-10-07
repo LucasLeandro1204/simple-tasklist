@@ -19,7 +19,7 @@
     <p slot="header" class="font-bold" v-text="task.title"></p>
 
     <template slot="header-buttons">
-      <button class="flex w-10 h-10 ml-2 text-white flex shadow-md rounded-full bg-indigo-dark" @click.prevent="toggle">
+      <button class="flex w-10 h-10 ml-2 text-white flex shadow-md rounded-full bg-indigo-dark" @click.prevent="updateStatus(task.id, ! task.status)">
         <i class="fa m-auto" :class="task.status ? 'fa-check' : 'fa-circle-o'"></i>
       </button>
     </template>
@@ -31,7 +31,7 @@
 
       <section-button
         icon="fa-trash"
-        @click.native.prevent="deleteTask" />
+        @click.native.prevent="deleteTask(task.id)" />
     </template>
 
     <div class="border-b px-4 py-4 text-sm text-grey-darkest markdown" v-html="content" v-if="task.description"></div>
@@ -104,6 +104,7 @@
       ]),
 
       ...mapActions('tasks', [
+        'deleteTask',
         'updateStatus',
       ]),
     },
