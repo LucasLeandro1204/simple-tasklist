@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTask;
+use App\Http\Requests\UpdateTask;
 use App\Task;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Jobs\CreateTask as Create;
 use App\Jobs\DeleteTask as Delete;
@@ -37,17 +38,12 @@ class TaskController extends Controller
     /**
      * Store a new task.
      *
-     * @param Request $request
+     * @param StoreTask $request
      * @return JsonResponse
      */
-    public function store(Request $request): JsonResponse
+    public function store(StoreTask $request): JsonResponse
     {
-        $data = array_values($request->validate([
-            'title' => 'required|string|max:80',
-            'description' => 'nullable|string|max:2000',
-        ]));
-
-        $task = Create::dispatchNow(...$data);
+        $task = Create::dispatchNow($request->title, $request->description);
 
         return response()->json($task, JsonResponse::HTTP_CREATED);
     }
@@ -55,19 +51,13 @@ class TaskController extends Controller
     /**
      * Update an existing task.
      *
-     * @param Request $request
+     * @param UpdateTask $request
      * @param Task $task
      * @return Task
      */
-    public function update(Request $request, Task $task): Task
+    public function update(UpdateTask $request, Task $task): Task
     {
-        $data = $request->validate([
-            'title' => 'string|max:80',
-            'description' => 'nullable|string|max:2000',
-            'status' => 'boolean',
-        ]);
-
-        return Update::dispatchNow($task, $data);
+        return Update::dispatchNow($task, $request->only(['title', 'description', 'status']));
     }
 
     /**
