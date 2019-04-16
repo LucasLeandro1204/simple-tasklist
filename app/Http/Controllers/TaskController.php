@@ -12,8 +12,11 @@ use Illuminate\Database\Eloquent\Collection;
 
 class TaskController extends Controller
 {
+
     /**
      * Return all tasks.
+     *
+     * @return Collection
      */
     public function index(): Collection
     {
@@ -22,6 +25,9 @@ class TaskController extends Controller
 
     /**
      * Return a task.
+     *
+     * @param Task $task
+     * @return Task
      */
     public function show(Task $task): Task
     {
@@ -30,6 +36,9 @@ class TaskController extends Controller
 
     /**
      * Store a new task.
+     *
+     * @param Request $request
+     * @return JsonResponse
      */
     public function store(Request $request): JsonResponse
     {
@@ -44,7 +53,11 @@ class TaskController extends Controller
     }
 
     /**
-     * Update a task.
+     * Update an existing task.
+     *
+     * @param Request $request
+     * @param Task $task
+     * @return Task
      */
     public function update(Request $request, Task $task): Task
     {
@@ -58,7 +71,9 @@ class TaskController extends Controller
     }
 
     /**
-     * Delete a task
+     * Delete an existing task.
+     *
+     * @param Task $task
      */
     public function destroy(Task $task): void
     {
