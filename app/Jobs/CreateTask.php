@@ -32,8 +32,6 @@ class CreateTask
 
     /**
      * Create a new job instance.
-     *
-     * @return void
      */
     public function __construct(string $title, string $description = null, bool $status = false)
     {

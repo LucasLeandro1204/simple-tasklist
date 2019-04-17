@@ -26,7 +26,8 @@ class UpdateTask
     /**
      * Create a new job instance.
      *
-     * @return void
+     * @param Task $task
+     * @param array $attributes
      */
     public function __construct(Task $task, array $attributes)
     {
