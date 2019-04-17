@@ -16,8 +16,6 @@ class TaskController extends Controller
 
     /**
      * Return all tasks.
-     *
-     * @return Collection
      */
     public function index(): Collection
     {
@@ -26,9 +24,6 @@ class TaskController extends Controller
 
     /**
      * Return a task.
-     *
-     * @param Task $task
-     * @return Task
      */
     public function show(Task $task): Task
     {
@@ -37,9 +32,6 @@ class TaskController extends Controller
 
     /**
      * Store a new task.
-     *
-     * @param StoreTask $request
-     * @return JsonResponse
      */
     public function store(StoreTask $request): JsonResponse
     {
@@ -50,10 +42,6 @@ class TaskController extends Controller
 
     /**
      * Update an existing task.
-     *
-     * @param UpdateTask $request
-     * @param Task $task
-     * @return Task
      */
     public function update(UpdateTask $request, Task $task): Task
     {
@@ -62,8 +50,6 @@ class TaskController extends Controller
 
     /**
      * Delete an existing task.
-     *
-     * @param Task $task
      */
     public function destroy(Task $task): void
     {

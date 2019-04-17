@@ -32,10 +32,6 @@ class CreateTask
 
     /**
      * Create a new job instance.
-     *
-     * @param string $title
-     * @param string|null $description
-     * @param bool $status
      */
     public function __construct(string $title, string $description = null, bool $status = false)
     {
